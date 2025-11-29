@@ -91,8 +91,8 @@ const Contact: React.FC = () => {
                 <Phone size={24} />
               </div>
               <div>
-                <h3 className="text-white font-bold mb-1">تلفن تماس</h3>
-                <p className="text-slate-400 ltr text-right" dir="ltr">021 - 88 12 34 56</p>
+                <h3 className="text-white font-bold mb-1">شماره تلفن واتساپ</h3>
+                <p className="text-slate-400 ltr text-right" dir="ltr">09902311382</p>
                 <p className="text-slate-500 text-sm">شنبه تا چهارشنبه، ۹ تا ۱۷</p>
               </div>
             </div>
@@ -103,7 +103,7 @@ const Contact: React.FC = () => {
               </div>
               <div>
                 <h3 className="text-white font-bold mb-1">ایمیل</h3>
-                <p className="text-slate-400 font-mono">hello@nexora.ai</p>
+                <p className="text-slate-400 font-mono">info@nexoraaistudio.tech</p>
                 <p className="text-slate-500 text-sm">پاسخگویی در کمتر از ۲ ساعت</p>
               </div>
             </div>
@@ -114,7 +114,7 @@ const Contact: React.FC = () => {
               </div>
               <div>
                 <h3 className="text-white font-bold mb-1">دفتر مرکزی</h3>
-                <p className="text-slate-400">تهران، خیابان ولیعصر، پارک علم و فناوری</p>
+                <p className="text-slate-400">اصفهان، نجف آباد، بلوار بهارستان</p>
               </div>
             </div>
           </div>
