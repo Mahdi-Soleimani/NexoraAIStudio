@@ -5,7 +5,8 @@ import react from '@vitejs/plugin-react';
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
     return {
-      base: '/NexoraAIStudio/',
+      // تغییر حیاتی: تغییر بیس از نام مخزن به اسلش ساده برای دامنه اختصاصی
+      base: '/', 
       
       server: {
         port: 3000,
