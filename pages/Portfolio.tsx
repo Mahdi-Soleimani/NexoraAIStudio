@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Project } from '../types';
 import Button from '../components/Button';
 import { ExternalLink, ArrowRight } from 'lucide-react';
+import ComingSoon from '../components/ComingSoon'; // <--- Import ComingSoon
 
 const projects: Project[] = [
   {
@@ -52,6 +53,13 @@ const projects: Project[] = [
 ];
 
 const Portfolio: React.FC = () => {
+  // --- TEMPORARY: Show Coming Soon Page ---
+  // برای فعال‌سازی مجدد صفحه، فقط خط زیر را پاک کنید یا کامنت کنید
+  return <ComingSoon />;
+  // ----------------------------------------
+
+
+
   const [filter, setFilter] = useState<'all' | 'telegram' | 'automation' | 'vision'>('all');
 
   const filteredProjects = filter === 'all' 

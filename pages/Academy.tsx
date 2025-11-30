@@ -1,8 +1,15 @@
 import React, { useState } from 'react';
 import { PlayCircle, FileText, Mail, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import Button from '../components/Button';
+import ComingSoon from '../components/ComingSoon'; // <--- Import ComingSoon
 
 const Academy: React.FC = () => {
+  // --- TEMPORARY: Show Coming Soon Page ---
+  // برای فعال‌سازی مجدد صفحه، فقط خط زیر را پاک کنید یا کامنت کنید
+  return <ComingSoon />;
+  // ----------------------------------------
+
+
   const [email, setEmail] = useState('');
   const [honeyPot, setHoneyPot] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
