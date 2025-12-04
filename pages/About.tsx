@@ -3,10 +3,10 @@ import { Linkedin, Github } from 'lucide-react';
 import AgentVisual from '../components/AgentVisual'; // <--- ایمپورت جدید
 
 // --- ایمپورت کردن عکس‌ها ---
-import ceoImg from '../assets/team/ceo.png';
-import erfanImg from '../assets/team/erfan.jpg';
-import nargesImg from '../assets/team/narges.jpg';
-import mahshidImg from '../assets/team/mahshid.jpg';
+import ceoImg from '../assets/team/ceo.webp';
+import erfanImg from '../assets/team/erfan.webp';
+import nargesImg from '../assets/team/narges.webp';
+import mahshidImg from '../assets/team/mahshid.webp';
 
 const About: React.FC = () => {
   return (
@@ -71,7 +71,7 @@ const About: React.FC = () => {
             <div key={i} className="group relative">
               <div className="relative overflow-hidden rounded-2xl aspect-[3/4] mb-4 border border-slate-800 group-hover:border-cyan-500/50 transition-colors">
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-60 z-10"></div>
-                <img src={member.img} alt={member.name} className="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-500 transform group-hover:scale-105" />
+                <img src={member.img} alt={member.name} loading="lazy" className="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-500 transform group-hover:scale-105" />
                 
                 <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-3 translate-y-10 group-hover:translate-y-0 transition-transform duration-300 z-20">
                   <button className="bg-white/10 backdrop-blur-md p-2 rounded-full text-white hover:bg-[#0077b5] transition-colors hover:scale-110"><Linkedin size={18} /></button>
