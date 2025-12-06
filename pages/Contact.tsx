@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Loader2, CheckCircle, AlertCircle, Mic } from 'lucide-react';
 import Button from '../components/Button';
 
 const Contact: React.FC = () => {
@@ -75,7 +75,7 @@ const Contact: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="grid md:grid-cols-2 gap-16">
-        
+
         {/* Contact Info */}
         <div className="space-y-8">
           <div>
@@ -117,56 +117,82 @@ const Contact: React.FC = () => {
                 <p className="text-slate-400">اصفهان، نجف آباد، بلوار بهارستان</p>
               </div>
             </div>
+
+            {/* Neon Voice Assistant Promo */}
+            <div className="mt-8 relative group overflow-hidden rounded-2xl border border-green-500/50 bg-slate-900/50 p-6 shadow-[0_0_20px_rgba(74,222,128,0.1)] hover:shadow-[0_0_30px_rgba(74,222,128,0.2)] transition-all duration-500">
+              <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-transparent opacity-50"></div>
+              <div className="relative z-10">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="p-2 rounded-lg bg-black/40 border border-green-500/30 text-green-400 animate-pulse">
+                    <Mic size={20} />
+                  </div>
+                  <h3 className="text-lg font-bold text-white">دستیار صوتی هوشمند</h3>
+                </div>
+                <p className="text-slate-300 text-sm mb-5 leading-relaxed">
+                  آینده ارتباطات را تجربه کنید. همین حالا با هوش مصنوعی قدرتمند نکسورا صحبت کنید و با خدمات ما آشنا شوید.
+                </p>
+                <a
+                  href="https://ai.nexoraaistudio.tech"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm font-bold text-black bg-green-400 hover:bg-green-300 px-4 py-2 rounded-lg transition-colors shadow-lg shadow-green-400/20"
+                >
+                  شروع گفتگو
+                  <Mic size={16} />
+                </a>
+              </div>
+            </div>
+
           </div>
         </div>
 
         {/* Form */}
         <div className="bg-surface p-8 rounded-3xl border border-slate-800 shadow-2xl relative overflow-hidden">
-          
+
           <h2 className="text-2xl font-bold text-white mb-6">فرم درخواست مشاوره</h2>
-          
+
           <form className="space-y-4" onSubmit={handleSubmit}>
-            
+
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-slate-400 text-sm mb-2">نام و نام خانوادگی</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
                   disabled={status === 'loading' || status === 'success'}
-                  className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors disabled:opacity-50" 
+                  className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors disabled:opacity-50"
                 />
               </div>
               <div>
                 <label className="block text-slate-400 text-sm mb-2">شماره تماس</label>
-                <input 
-                  type="tel" 
+                <input
+                  type="tel"
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
                   disabled={status === 'loading' || status === 'success'}
-                  className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors disabled:opacity-50" 
+                  className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors disabled:opacity-50"
                 />
               </div>
             </div>
-            
+
             <div>
               <label className="block text-slate-400 text-sm mb-2">نام سازمان / شرکت</label>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 name="company"
                 value={formData.company}
                 onChange={handleChange}
                 disabled={status === 'loading' || status === 'success'}
-                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors disabled:opacity-50" 
+                className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors disabled:opacity-50"
               />
             </div>
 
             <div>
               <label className="block text-slate-400 text-sm mb-2">موضوع درخواست</label>
-              <select 
+              <select
                 name="subject"
                 value={formData.subject}
                 onChange={handleChange}
@@ -182,8 +208,8 @@ const Contact: React.FC = () => {
 
             <div>
               <label className="block text-slate-400 text-sm mb-2">توضیحات تکمیلی</label>
-              <textarea 
-                rows={4} 
+              <textarea
+                rows={4}
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
@@ -192,8 +218,8 @@ const Contact: React.FC = () => {
               ></textarea>
             </div>
 
-            <Button 
-              className="w-full gap-2 text-lg" 
+            <Button
+              className="w-full gap-2 text-lg"
               disabled={status === 'loading' || status === 'success'}
             >
               {status === 'loading' ? (

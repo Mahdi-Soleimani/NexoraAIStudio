@@ -69,7 +69,7 @@ const Footer: React.FC = () => {
 
         <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-slate-500 text-xs">
-            © ۱۴۰۳ تمامی حقوق برای نکسورا استودیو محفوظ است.
+            © ۱۴۰۴ تمامی حقوق برای نکسورا استودیو محفوظ است.
           </p>
           <div className="flex gap-6">
             <a href="#" className="text-slate-500 hover:text-white text-xs">قوانین و مقررات</a>
