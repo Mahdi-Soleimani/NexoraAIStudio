@@ -123,10 +123,10 @@ export default function App() {
         <div className="flex flex-col md:flex-row md:items-center gap-4">
            {/* Social Icons */}
            <div className="flex items-center gap-3 pr-4 md:border-r border-gray-700">
-              <a href="#" className="text-gray-500 hover:text-red-500 transition-colors"><Youtube size={20} /></a>
-              <a href="#" className="text-gray-500 hover:text-pink-500 transition-colors"><Instagram size={20} /></a>
-              <a href="#" className="text-gray-500 hover:text-blue-400 transition-colors"><Send size={20} /></a>
-              <a href="#" className="text-gray-500 hover:text-nexora-500 transition-colors"><Globe size={20} /></a>
+              <a href="https://www.youtube.com/@NexoraAIStudio" className="text-gray-500 hover:text-red-500 transition-colors"><Youtube size={20} /></a>
+              <a href="https://www.instagram.com/nexora_ai_studio/?utm_source=ig_web_button_share_sheet" className="text-gray-500 hover:text-pink-500 transition-colors"><Instagram size={20} /></a>
+              <a href="t.me/NexoraAICompany" className="text-gray-500 hover:text-blue-400 transition-colors"><Send size={20} /></a>
+              <a href="nexoraaistudio.tech" className="text-gray-500 hover:text-nexora-500 transition-colors"><Globe size={20} /></a>
            </div>
 
            <div className="flex items-center gap-3 text-xs text-gray-500 font-mono">

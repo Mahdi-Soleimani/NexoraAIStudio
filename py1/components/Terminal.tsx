@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { TerminalLog } from '../types';
-import { ChevronUp, ChevronDown, Trash2, GripHorizontal } from 'lucide-react';
+import { ChevronUp, ChevronDown, Trash2, GripHorizontal, X } from 'lucide-react';
 
 interface TerminalProps {
   logs: TerminalLog[];
@@ -46,16 +46,16 @@ export const Terminal: React.FC<TerminalProps> = ({ logs, isOpen, onToggle, onCl
   }, [isDragging]);
 
   return (
-    <div 
+    <div
       className={`absolute left-0 right-0 z-40 flex flex-col transition-all duration-300 ease-in-out bg-[#0f172a]/95 backdrop-blur-md border-t border-nexora-500/30 shadow-[0_-5px_20px_rgba(0,0,0,0.5)]`}
-      style={{ 
+      style={{
         bottom: '80px', // Sits exactly above the footer (h-20)
         height: isOpen ? `${height}px` : '40px',
       }}
     >
       {/* Resizer Handle (Only visible when open) */}
       {isOpen && (
-        <div 
+        <div
           className="w-full h-2 bg-transparent hover:bg-nexora-500/20 cursor-ns-resize absolute top-0 left-0 z-50 flex items-center justify-center group"
           onMouseDown={(e) => {
             e.preventDefault();
@@ -67,7 +67,7 @@ export const Terminal: React.FC<TerminalProps> = ({ logs, isOpen, onToggle, onCl
       )}
 
       {/* Terminal Header */}
-      <div 
+      <div
         className="flex items-center justify-between px-4 h-10 shrink-0 bg-[#0c0c0c] border-b border-gray-800 cursor-pointer select-none"
         onClick={onToggle}
       >
@@ -81,19 +81,26 @@ export const Terminal: React.FC<TerminalProps> = ({ logs, isOpen, onToggle, onCl
           )}
         </div>
         <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
-          <button 
+          <button
             onClick={onClear}
             className="p-1 hover:bg-gray-700 rounded text-gray-400 hover:text-red-400 transition-colors"
             title="Clear Console"
           >
             <Trash2 size={14} />
           </button>
+          <button
+            onClick={onToggle}
+            className="p-1 hover:bg-gray-700 rounded text-gray-400 hover:text-gray-200 transition-colors"
+            title="Close Terminal"
+          >
+            <X size={16} />
+          </button>
         </div>
       </div>
 
       {/* Terminal Content */}
       {isOpen && (
-        <div 
+        <div
           ref={scrollRef}
           className="flex-grow overflow-auto p-4 font-mono text-sm bg-[#0c0c0c]/90 text-gray-300 space-y-2 custom-scrollbar"
         >
@@ -103,11 +110,10 @@ export const Terminal: React.FC<TerminalProps> = ({ logs, isOpen, onToggle, onCl
             logs.map((log) => (
               <div key={log.id} className="flex gap-2 animate-in fade-in slide-in-from-left-2 duration-200">
                 <span className="text-gray-600 shrink-0 select-none">[{log.timestamp.toLocaleTimeString().split(' ')[0]}]</span>
-                <span className={`break-words font-medium ${
-                  log.type === 'error' ? 'text-red-400' : 
-                  log.type === 'success' ? 'text-green-400' : 
-                  log.type === 'warning' ? 'text-yellow-400' : 'text-blue-300'
-                }`}>
+                <span className={`break-words font-medium ${log.type === 'error' ? 'text-red-400' :
+                  log.type === 'success' ? 'text-green-400' :
+                    log.type === 'warning' ? 'text-yellow-400' : 'text-blue-300'
+                  }`}>
                   {log.type === 'info' && <span className="text-blue-500 mr-2">➜</span>}
                   {log.message}
                 </span>
