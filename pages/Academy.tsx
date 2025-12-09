@@ -106,7 +106,7 @@ const Academy: React.FC = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-20">
 
       <div className="text-center">
-        <h1 className="text-4xl font-bold text-white mb-4">آکادمی نکسورا</h1>
+        <h1 className="text-4xl font-bold text-white mb-4">آکادمی نکسورا: آموزش تخصصی n8n و هوش مصنوعی</h1>
         <p className="text-slate-400">یادگیری هوش مصنوعی به زبان ساده و کاربردی</p>
       </div>
 
