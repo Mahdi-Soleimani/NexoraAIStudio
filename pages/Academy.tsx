@@ -94,7 +94,7 @@ const Academy: React.FC = () => {
               <Video className="text-primary w-6 h-6" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-white">بوت‌کمپ جامع n8n</h2>
+              <h2 className="text-2xl font-bold text-white">بوت‌کمپ جامع n8n برای بازارکار ایران</h2>
               <p className="text-slate-400 text-sm">مسیر ورود به بازار کار اتوماسیون</p>
             </div>
           </div>
