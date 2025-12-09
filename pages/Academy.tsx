@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { PlayCircle, FileText, Mail, Loader2, CheckCircle, AlertCircle, ChevronLeft, ChevronRight, Video } from 'lucide-react';
+import { PlayCircle, FileText, Mail, Loader2, CheckCircle, AlertCircle, ChevronLeft, ChevronRight, Video, Code, Wrench } from 'lucide-react';
 import Button from '../components/Button';
 import AparatPlayer from '../components/AparatPlayer';
 
@@ -14,6 +14,18 @@ const n8nBootcampVideos = [
   },
 ];
 
+// --- ابزارها و دوره‌های آنلاین ---
+const toolsAndCourses = [
+  {
+    id: 1,
+    title: "پایتون برای n8n",
+    description: "ساختار داده ها در n8n",
+    link: "py1", // لینک به صفحه دوره - قابل تغییر توسط کاربر
+    tag: "Python + n8n",
+    gradient: "from-blue-600 via-purple-600 to-orange-500"
+  },
+];
+
 const Academy: React.FC = () => {
   const [email, setEmail] = useState('');
   const [honeyPot, setHoneyPot] = useState('');
@@ -22,6 +34,7 @@ const Academy: React.FC = () => {
 
   // اسکرول افقی برای ویدیوها
   const scrollRef = useRef<HTMLDivElement>(null);
+  const toolsScrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
@@ -30,6 +43,17 @@ const Academy: React.FC = () => {
         scrollRef.current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
       } else {
         scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      }
+    }
+  };
+
+  const scrollTools = (direction: 'left' | 'right') => {
+    if (toolsScrollRef.current) {
+      const scrollAmount = 350;
+      if (direction === 'left') {
+        toolsScrollRef.current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      } else {
+        toolsScrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
       }
     }
   };
@@ -143,6 +167,122 @@ const Academy: React.FC = () => {
               <Video size={20} />
             </div>
             <span className="text-sm font-medium">قسمت‌های بعدی...</span>
+          </div>
+        </div>
+      </section>
+
+      {/* --- بخش ابزارها و دوره‌های آنلاین --- */}
+      <section className="relative">
+        <div className="flex items-center justify-between mb-6 px-2">
+          <div className="flex items-center gap-3">
+            <div className="bg-gradient-to-br from-purple-500/20 to-blue-500/20 p-2 rounded-lg">
+              <Wrench className="text-purple-400 w-6 h-6" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-white">ابزارها و دوره‌های آنلاین</h2>
+              <p className="text-slate-400 text-sm">دسترسی به محتوای تخصصی و ابزارهای کاربردی</p>
+            </div>
+          </div>
+
+          {/* دکمه‌های نویگیشن اسکرول */}
+          <div className="flex gap-2">
+            <button onClick={() => scrollTools('right')} className="p-2 rounded-full bg-slate-800 hover:bg-slate-700 text-white transition-colors border border-slate-700">
+              <ChevronRight size={20} />
+            </button>
+            <button onClick={() => scrollTools('left')} className="p-2 rounded-full bg-slate-800 hover:bg-slate-700 text-white transition-colors border border-slate-700">
+              <ChevronLeft size={20} />
+            </button>
+          </div>
+        </div>
+
+        {/* کانتینر اسکرول ابزارها */}
+        <div
+          ref={toolsScrollRef}
+          className="flex overflow-x-auto gap-6 pb-8 snap-x snap-mandatory hide-scrollbar"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
+          {toolsAndCourses.map((item) => (
+            <a
+              key={item.id}
+              href={item.link}
+              className="flex-shrink-0 w-[320px] md:w-[380px] snap-start group block"
+            >
+              <div className="h-full bg-surface border border-slate-800 rounded-2xl overflow-hidden hover:border-purple-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-purple-500/20 hover:-translate-y-1">
+                {/* Header with Animated Gradient */}
+                <div className={`relative h-48 bg-gradient-to-br ${item.gradient} p-6 overflow-hidden`}>
+                  {/* Animated Background Pattern */}
+                  <div className="absolute inset-0 opacity-20">
+                    <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+                  </div>
+
+                  {/* Animated Icons */}
+                  <div className="relative h-full flex items-center justify-center gap-4">
+                    {/* Python Icon */}
+                    <div className="relative group-hover:scale-110 transition-transform duration-500">
+                      <div className="absolute inset-0 bg-blue-400 blur-xl opacity-50 group-hover:opacity-75 transition-opacity"></div>
+                      <div className="relative bg-blue-500 p-4 rounded-2xl shadow-2xl group-hover:rotate-6 transition-transform duration-500">
+                        <Code className="w-12 h-12 text-white" strokeWidth={2.5} />
+                      </div>
+                      {/* Python Text */}
+                      <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-white font-bold text-sm whitespace-nowrap opacity-90">
+                        Python
+                      </div>
+                    </div>
+
+                    {/* Connection Animation */}
+                    <div className="flex items-center gap-1">
+                      <div className="w-2 h-2 rounded-full bg-white animate-pulse"></div>
+                      <div className="w-2 h-2 rounded-full bg-white animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                      <div className="w-2 h-2 rounded-full bg-white animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                    </div>
+
+                    {/* n8n Icon */}
+                    <div className="relative group-hover:scale-110 transition-transform duration-500">
+                      <div className="absolute inset-0 bg-orange-400 blur-xl opacity-50 group-hover:opacity-75 transition-opacity"></div>
+                      <div className="relative bg-gradient-to-br from-orange-500 to-pink-500 p-4 rounded-2xl shadow-2xl group-hover:-rotate-6 transition-transform duration-500">
+                        <svg className="w-12 h-12 text-white" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M18.5 14.5L13 9L7.5 14.5M18.5 9.5L13 15L7.5 9.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                        </svg>
+                      </div>
+                      {/* n8n Text */}
+                      <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-white font-bold text-sm whitespace-nowrap opacity-90">
+                        n8n
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="p-6">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-purple-500/30 text-purple-300 px-3 py-1 rounded-full text-xs font-bold">
+                      {item.tag}
+                    </span>
+                  </div>
+
+                  <h3 className="text-white font-bold text-xl mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-blue-400 transition-all">
+                    {item.title}
+                  </h3>
+
+                  <p className="text-slate-400 text-sm leading-relaxed mb-4">
+                    {item.description}
+                  </p>
+
+                  <div className="flex items-center gap-2 text-purple-400 font-medium text-sm group-hover:gap-3 transition-all">
+                    <span>مشاهده دوره</span>
+                    <ChevronLeft className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </div>
+            </a>
+          ))}
+
+          {/* کارت \"به زودی\" */}
+          <div className="flex-shrink-0 w-[250px] snap-start bg-slate-900/50 border border-dashed border-slate-800 rounded-2xl flex flex-col items-center justify-center text-slate-500 gap-4 min-h-[300px]">
+            <div className="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center animate-pulse">
+              <Wrench size={24} />
+            </div>
+            <span className="text-sm font-medium">ابزارهای بیشتر...</span>
           </div>
         </div>
       </section>
