@@ -25,12 +25,11 @@ const Academy: React.FC = () => {
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
-      const { current } = scrollRef.current;
       const scrollAmount = 350; // مقدار اسکرول به پیکسل
       if (direction === 'left') {
-        current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        scrollRef.current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
       } else {
-        current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
       }
     }
   };
@@ -81,7 +80,7 @@ const Academy: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-20">
-      
+
       <div className="text-center">
         <h1 className="text-4xl font-bold text-white mb-4">آکادمی نکسورا</h1>
         <p className="text-slate-400">یادگیری هوش مصنوعی به زبان ساده و کاربردی</p>
@@ -99,7 +98,7 @@ const Academy: React.FC = () => {
               <p className="text-slate-400 text-sm">مسیر ورود به بازار کار اتوماسیون</p>
             </div>
           </div>
-          
+
           {/* دکمه‌های نویگیشن اسکرول */}
           <div className="flex gap-2">
             <button onClick={() => scroll('right')} className="p-2 rounded-full bg-slate-800 hover:bg-slate-700 text-white transition-colors border border-slate-700">
@@ -112,20 +111,20 @@ const Academy: React.FC = () => {
         </div>
 
         {/* کانتینر اسکرول */}
-        <div 
+        <div
           ref={scrollRef}
           className="flex overflow-x-auto gap-6 pb-8 snap-x snap-mandatory hide-scrollbar"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {n8nBootcampVideos.map((video) => (
-            <div 
-              key={video.id} 
+            <div
+              key={video.id}
               className="flex-shrink-0 w-[300px] md:w-[350px] snap-start bg-surface border border-slate-800 rounded-2xl overflow-hidden hover:border-primary/50 transition-all duration-300 group"
             >
               <div className="p-3">
                 <AparatPlayer videoId={video.hash} title={video.title} />
               </div>
-              
+
               <div className="px-5 pb-5 pt-2">
                 <div className="flex justify-between items-center text-xs text-slate-500 mb-2">
                   <span className="bg-slate-800 px-2 py-1 rounded text-slate-300">{video.level}</span>
@@ -137,7 +136,7 @@ const Academy: React.FC = () => {
               </div>
             </div>
           ))}
-          
+
           {/* کارت "به زودی" برای انتهای لیست */}
           <div className="flex-shrink-0 w-[200px] snap-start bg-slate-900/50 border border-dashed border-slate-800 rounded-2xl flex flex-col items-center justify-center text-slate-500 gap-4">
             <div className="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center animate-pulse">
@@ -182,20 +181,20 @@ const Academy: React.FC = () => {
           <p className="text-white/80 mb-8">
             هفته‌ای یک ایمیل، حاوی جدیدترین اخبار و آموزش‌های کاربردی هوش مصنوعی.
           </p>
-          
+
           <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto relative" onSubmit={handleSubscribe}>
             {/* Honeypot */}
             <input type="text" className="hidden" value={honeyPot} onChange={(e) => setHoneyPot(e.target.value)} />
 
-            <input 
-              type="email" 
+            <input
+              type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="ایمیل خود را وارد کنید" 
+              placeholder="ایمیل خود را وارد کنید"
               disabled={status === 'loading' || status === 'success'}
               className="flex-grow bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder-white/50 rounded-lg px-4 py-3 focus:outline-none focus:bg-white/20 transition-all disabled:opacity-50"
             />
-            <button 
+            <button
               type="submit"
               disabled={status === 'loading' || status === 'success'}
               className="bg-white text-primary font-bold px-6 py-3 rounded-lg hover:bg-slate-100 transition-colors disabled:opacity-70 min-w-[100px] flex justify-center items-center"
@@ -203,7 +202,7 @@ const Academy: React.FC = () => {
               {status === 'loading' ? <Loader2 className="animate-spin w-5 h-5" /> : status === 'success' ? <CheckCircle className="w-5 h-5 text-green-600" /> : 'عضویت'}
             </button>
           </form>
-          
+
           {status === 'success' && (
             <div className="mt-4 text-green-300 bg-green-500/20 py-2 px-4 rounded-lg inline-flex items-center gap-2 text-sm">
               <CheckCircle size={16} /> ثبت شد! منتظر خبرهای خوب باشید.
