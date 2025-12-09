@@ -127,9 +127,11 @@ const Careers: React.FC = () => {
       {/* Job Listings */}
       <div className="space-y-6">
         {[
-          { title: "Senior Python Developer", type: "تمام وقت", location: "تهران / ریموت" },
-          { title: "AI Research Engineer", type: "تمام وقت", location: "تهران" },
-          { title: "Frontend Developer (React)", type: "پروژه‌ای", location: "ریموت" },
+          { title: "n8n Workflow Developer (Automation Specialist)", type: "تمام وقت", location: "ریموت" },
+          { title: "AI Agent Developer (LLM-Based Agents)", type: "تمام وقت", location: "ریموت" },
+          { title: "Automation Engineer (n8n/LLM)", type: "تمام وقت", location: "ریموت" },
+          { title: "LLM / Prompt Engineer", type: "تمام وقت", location: "ریموت" },
+          { title: "AI Solutions Architect", type: "تمام وقت", location: "ریموت" },
         ].map((job, i) => (
           <div key={i} className="bg-surface border border-slate-800 p-6 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6 hover:border-slate-600 transition-colors">
             <div>
