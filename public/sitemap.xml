@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Home Page - Highest Priority -->
+  <url>
+    <loc>https://nexoraaistudio.tech/</loc>
+    <lastmod>2025-12-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- Services Page -->
+  <url>
+    <loc>https://nexoraaistudio.tech/#/services</loc>
+    <lastmod>2025-12-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Portfolio Page -->
+  <url>
+    <loc>https://nexoraaistudio.tech/#/portfolio</loc>
+    <lastmod>2025-12-09</lastmod>
+    <changefreq>biweekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Academy Page -->
+  <url>
+    <loc>https://nexoraaistudio.tech/#/academy</loc>
+    <lastmod>2025-12-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- About Page -->
+  <url>
+    <loc>https://nexoraaistudio.tech/#/about</loc>
+    <lastmod>2025-12-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Careers Page -->
+  <url>
+    <loc>https://nexoraaistudio.tech/#/careers</loc>
+    <lastmod>2025-12-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Contact Page -->
+  <url>
+    <loc>https://nexoraaistudio.tech/#/contact</loc>
+    <lastmod>2025-12-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+</urlset>
