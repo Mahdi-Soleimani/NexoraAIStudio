@@ -1,29 +1,43 @@
-import React, { useState } from 'react';
-import { PlayCircle, FileText, Mail, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { PlayCircle, FileText, Mail, Loader2, CheckCircle, AlertCircle, ChevronLeft, ChevronRight, Video } from 'lucide-react';
 import Button from '../components/Button';
-import ComingSoon from '../components/ComingSoon'; // <--- Import ComingSoon
+import AparatPlayer from '../components/AparatPlayer';
+
+// --- داده‌های بوت‌کمپ (برای اضافه کردن ویدیو جدید، فقط این لیست را آپدیت کنید) ---
+const n8nBootcampVideos = [
+  {
+    id: 1,
+    title: "جلسه ۰: معرفی n8n و ورود به دنیای اتوماسیون",
+    hash: "nnwltfi", // هش ویدیو از لینک آپارات
+    duration: "07:29",
+    level: "BootCamp"
+  },
+];
 
 const Academy: React.FC = () => {
-  // --- TEMPORARY: Show Coming Soon Page ---
-  // برای فعال‌سازی مجدد صفحه، فقط خط زیر را پاک کنید یا کامنت کنید
-  return <ComingSoon />;
-  // ----------------------------------------
-
-
   const [email, setEmail] = useState('');
   const [honeyPot, setHoneyPot] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
+  // اسکرول افقی برای ویدیوها
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollRef.current) {
+      const { current } = scrollRef.current;
+      const scrollAmount = 350; // مقدار اسکرول به پیکسل
+      if (direction === 'left') {
+        current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      } else {
+        current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      }
+    }
+  };
+
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Security Check: Honeypot for bots
-    if (honeyPot) {
-      console.log("Bot detected!");
-      setStatus('success'); // Fake success
-      return;
-    }
+    if (honeyPot) return; // Bot detection
 
     if (!email || !email.includes('@')) {
       setStatus('error');
@@ -31,11 +45,8 @@ const Academy: React.FC = () => {
       return;
     }
 
-    // Use CORS Proxy + Webhook URL from .env
     const webhookUrl = import.meta.env.VITE_NEWSLETTER_WEBHOOK;
-
     if (!webhookUrl) {
-      console.error('Webhook URL is not defined');
       setStatus('error');
       setErrorMessage('خطای تنظیمات سیستم.');
       return;
@@ -46,11 +57,9 @@ const Academy: React.FC = () => {
     try {
       const response = await fetch(webhookUrl, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          type: 'newsletter', // <--- شناسه مهم برای تفکیک در n8n
+          type: 'newsletter',
           email: email,
           source: 'nexora_website',
           page: 'academy',
@@ -65,9 +74,8 @@ const Academy: React.FC = () => {
         throw new Error('Failed to subscribe');
       }
     } catch (error) {
-      console.error('Subscription error:', error);
       setStatus('error');
-      setErrorMessage('مشکلی در برقراری ارتباط پیش آمد. لطفاً دوباره تلاش کنید.');
+      setErrorMessage('مشکلی پیش آمد.');
     }
   };
 
@@ -76,61 +84,94 @@ const Academy: React.FC = () => {
       
       <div className="text-center">
         <h1 className="text-4xl font-bold text-white mb-4">آکادمی نکسورا</h1>
-        <p className="text-slate-400">یادگیری هوش مصنوعی به زبان ساده</p>
+        <p className="text-slate-400">یادگیری هوش مصنوعی به زبان ساده و کاربردی</p>
       </div>
 
-      {/* Featured Video */}
+      {/* --- بخش جدید: بوت‌کمپ n8n (اسکرول افقی) --- */}
+      <section className="relative">
+        <div className="flex items-center justify-between mb-6 px-2">
+          <div className="flex items-center gap-3">
+            <div className="bg-primary/20 p-2 rounded-lg">
+              <Video className="text-primary w-6 h-6" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-white">بوت‌کمپ جامع n8n</h2>
+              <p className="text-slate-400 text-sm">مسیر ورود به بازار کار اتوماسیون</p>
+            </div>
+          </div>
+          
+          {/* دکمه‌های نویگیشن اسکرول */}
+          <div className="flex gap-2">
+            <button onClick={() => scroll('right')} className="p-2 rounded-full bg-slate-800 hover:bg-slate-700 text-white transition-colors border border-slate-700">
+              <ChevronRight size={20} />
+            </button>
+            <button onClick={() => scroll('left')} className="p-2 rounded-full bg-slate-800 hover:bg-slate-700 text-white transition-colors border border-slate-700">
+              <ChevronLeft size={20} />
+            </button>
+          </div>
+        </div>
+
+        {/* کانتینر اسکرول */}
+        <div 
+          ref={scrollRef}
+          className="flex overflow-x-auto gap-6 pb-8 snap-x snap-mandatory hide-scrollbar"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
+          {n8nBootcampVideos.map((video) => (
+            <div 
+              key={video.id} 
+              className="flex-shrink-0 w-[300px] md:w-[350px] snap-start bg-surface border border-slate-800 rounded-2xl overflow-hidden hover:border-primary/50 transition-all duration-300 group"
+            >
+              <div className="p-3">
+                <AparatPlayer videoId={video.hash} title={video.title} />
+              </div>
+              
+              <div className="px-5 pb-5 pt-2">
+                <div className="flex justify-between items-center text-xs text-slate-500 mb-2">
+                  <span className="bg-slate-800 px-2 py-1 rounded text-slate-300">{video.level}</span>
+                  <span>{video.duration} دقیقه</span>
+                </div>
+                <h3 className="text-white font-bold text-lg leading-snug group-hover:text-primary transition-colors">
+                  {video.title}
+                </h3>
+              </div>
+            </div>
+          ))}
+          
+          {/* کارت "به زودی" برای انتهای لیست */}
+          <div className="flex-shrink-0 w-[200px] snap-start bg-slate-900/50 border border-dashed border-slate-800 rounded-2xl flex flex-col items-center justify-center text-slate-500 gap-4">
+            <div className="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center animate-pulse">
+              <Video size={20} />
+            </div>
+            <span className="text-sm font-medium">قسمت‌های بعدی...</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Video (Existing)
       <section className="bg-surface border border-slate-800 rounded-3xl overflow-hidden">
         <div className="grid md:grid-cols-2">
           <div className="p-8 md:p-12 flex flex-col justify-center">
-            <div className="inline-block px-3 py-1 bg-red-500/10 text-red-500 rounded-full text-xs font-bold mb-4 w-fit">ویدیو آموزشی جدید</div>
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">چگونه هوش مصنوعی جایگزین کارمندان نمی‌شود، بلکه آن‌ها را قدرتمندتر می‌کند؟</h2>
+            <div className="inline-block px-3 py-1 bg-red-500/10 text-red-500 rounded-full text-xs font-bold mb-4 w-fit">وبینار ویژه</div>
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">چگونه هوش مصنوعی جایگزین کارمندان نمی‌شود؟</h2>
             <p className="text-slate-400 mb-8 leading-relaxed">
-              در این وبینار تخصصی، به بررسی نقش ابزارهای AI در افزایش بهره‌وری تیم‌های انسانی می‌پردازیم و ترس‌های رایج را بررسی می‌کنیم.
+              در این وبینار تخصصی، به بررسی نقش ابزارهای AI در افزایش بهره‌وری تیم‌های انسانی می‌پردازیم.
             </p>
             <Button className="w-fit gap-2">
               <PlayCircle size={20} />
-              مشاهده ویدیو
+              مشاهده در یوتیوب
             </Button>
           </div>
-          <div className="bg-slate-900 relative h-64 md:h-auto">
-            <img src="https://picsum.photos/800/600?random=20" className="absolute inset-0 w-full h-full object-cover opacity-60" alt="Video cover" />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-16 h-16 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 cursor-pointer hover:scale-110 transition-transform">
-                <PlayCircle className="text-white w-8 h-8 ml-1" />
-              </div>
-            </div>
+          <div className="bg-slate-900 relative h-64 md:h-auto overflow-hidden">
+             <div className="absolute inset-0 opacity-60">
+                <img src="https://picsum.photos/800/600?grayscale" className="w-full h-full object-cover" alt="cover"/>
+             </div>
+             <div className="absolute inset-0 flex items-center justify-center">
+                <PlayCircle className="w-16 h-16 text-white/80" />
+             </div>
           </div>
         </div>
-      </section>
-
-      {/* Recent Articles */}
-      <section>
-        <div className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl font-bold text-white">آخرین مقالات</h2>
-          <button className="text-primary hover:text-white transition-colors text-sm">مشاهده همه</button>
-        </div>
-        
-        <div className="grid md:grid-cols-3 gap-8">
-          {[1, 2, 3].map((item) => (
-            <article key={item} className="group cursor-pointer">
-              <div className="rounded-2xl overflow-hidden mb-4 border border-slate-800">
-                <img src={`https://picsum.photos/600/400?random=${20+item}`} alt="Article" className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500" />
-              </div>
-              <div className="flex items-center gap-2 text-xs text-slate-500 mb-2">
-                <FileText size={14} />
-                <span>۵ دقیقه مطالعه</span>
-                <span className="w-1 h-1 bg-slate-700 rounded-full"></span>
-                <span>۲ روز پیش</span>
-              </div>
-              <h3 className="text-lg font-bold text-white mb-2 group-hover:text-primary transition-colors">۵ ابزار هوش مصنوعی که هر مدیری باید بشناسد</h3>
-              <p className="text-slate-400 text-sm line-clamp-2 leading-relaxed">
-                معرفی ابزارهایی که می‌توانند در مدیریت پروژه، زمان‌بندی و تحلیل داده‌ها به شما کمک کنند.
-              </p>
-            </article>
-          ))}
-        </div>
-      </section>
+      </section> */}
 
       {/* Newsletter Box */}
       <section className="bg-gradient-to-r from-primary to-indigo-700 rounded-3xl p-8 md:p-12 text-center relative overflow-hidden">
@@ -139,24 +180,12 @@ const Academy: React.FC = () => {
           <Mail className="w-12 h-12 text-white/80 mx-auto mb-6" />
           <h2 className="text-3xl font-bold text-white mb-4">عضویت در خبرنامه تخصصی AI</h2>
           <p className="text-white/80 mb-8">
-            هفته‌ای یک ایمیل، حاوی جدیدترین اخبار و آموزش‌های کاربردی هوش مصنوعی. بدون اسپم.
+            هفته‌ای یک ایمیل، حاوی جدیدترین اخبار و آموزش‌های کاربردی هوش مصنوعی.
           </p>
           
           <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto relative" onSubmit={handleSubscribe}>
-            
-            {/* Honeypot Field */}
-            <div className="hidden opacity-0 w-0 h-0 overflow-hidden pointer-events-none">
-              <label htmlFor="user_address_verify">Address Verification</label>
-              <input 
-                type="text" 
-                id="user_address_verify" 
-                name="user_address_verify" 
-                tabIndex={-1} 
-                autoComplete="off"
-                value={honeyPot}
-                onChange={(e) => setHoneyPot(e.target.value)}
-              />
-            </div>
+            {/* Honeypot */}
+            <input type="text" className="hidden" value={honeyPot} onChange={(e) => setHoneyPot(e.target.value)} />
 
             <input 
               type="email" 
@@ -164,38 +193,22 @@ const Academy: React.FC = () => {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="ایمیل خود را وارد کنید" 
               disabled={status === 'loading' || status === 'success'}
-              className="flex-grow bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder-white/50 rounded-lg px-4 py-3 focus:outline-none focus:bg-white/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-grow bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder-white/50 rounded-lg px-4 py-3 focus:outline-none focus:bg-white/20 transition-all disabled:opacity-50"
             />
             <button 
               type="submit"
               disabled={status === 'loading' || status === 'success'}
-              className="bg-white text-primary font-bold px-6 py-3 rounded-lg hover:bg-slate-100 transition-colors disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center min-w-[100px]"
+              className="bg-white text-primary font-bold px-6 py-3 rounded-lg hover:bg-slate-100 transition-colors disabled:opacity-70 min-w-[100px] flex justify-center items-center"
             >
-              {status === 'loading' ? (
-                <Loader2 className="animate-spin w-5 h-5" />
-              ) : status === 'success' ? (
-                <CheckCircle className="w-5 h-5 text-green-600" />
-              ) : (
-                'عضویت'
-              )}
+              {status === 'loading' ? <Loader2 className="animate-spin w-5 h-5" /> : status === 'success' ? <CheckCircle className="w-5 h-5 text-green-600" /> : 'عضویت'}
             </button>
           </form>
-
-          {/* Feedback Messages */}
-          {status === 'success' && (
-            <div className="mt-4 text-green-300 bg-green-500/20 py-2 px-4 rounded-lg inline-flex items-center gap-2 text-sm animate-in fade-in slide-in-from-bottom-2">
-              <CheckCircle size={16} />
-              ایمیل شما با موفقیت ثبت شد. به جمع ما خوش آمدید!
-            </div>
-          )}
           
-          {status === 'error' && (
-            <div className="mt-4 text-red-200 bg-red-500/20 py-2 px-4 rounded-lg inline-flex items-center gap-2 text-sm animate-in fade-in slide-in-from-bottom-2">
-              <AlertCircle size={16} />
-              {errorMessage}
+          {status === 'success' && (
+            <div className="mt-4 text-green-300 bg-green-500/20 py-2 px-4 rounded-lg inline-flex items-center gap-2 text-sm">
+              <CheckCircle size={16} /> ثبت شد! منتظر خبرهای خوب باشید.
             </div>
           )}
-
         </div>
       </section>
     </div>
